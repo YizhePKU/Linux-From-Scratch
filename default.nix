@@ -3,10 +3,10 @@ let
     let f = import path;
     in f (builtins.intersectAttrs (builtins.functionArgs f) pkgs // overrides);
   pkgs = {
-    busybox = callPackage ./busybox { };
-    gcc = callPackage ./gcc-musl { };
-    patchelf = callPackage ./patchelf { };
-    make = callPackage ./gnumake { };
+    busybox-bin = callPackage ./busybox-bin { };
+    gcc-musl-bin = callPackage ./gcc-musl-bin { };
+    patchelf-bin = callPackage ./patchelf-bin { };
+    gnumake = callPackage ./gnumake { };
     tree = callPackage ./tree { };
   };
 in

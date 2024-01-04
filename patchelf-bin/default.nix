@@ -1,4 +1,4 @@
-{ busybox }:
+{ busybox-bin }:
 
 derivation {
   name = "patchelf-bin";
@@ -6,5 +6,5 @@ derivation {
   builder = ./builder.sh;
   src = ./patchelf;
 
-  inherit busybox;
+  busybox = busybox-bin;
 }

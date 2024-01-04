@@ -11,7 +11,7 @@ chmod -R u+w $TMPDIR/source
 
 # Specifying --host tells autotools we're "cross-compiling", even though we really aren't.
 # This is necessary to skip some sanity checks (because binaries won't run without patchelf)
-./configure --host=x86_64-pc-linux-gnu
+./configure --disable-dependency-tracking --host=x86_64-pc-linux-gnu
 
 /bin/sh build.sh
 

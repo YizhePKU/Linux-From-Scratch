@@ -1,4 +1,4 @@
-{ busybox }:
+{ busybox-bin }:
 
 derivation {
   name = "gcc-musl-bin";
@@ -6,5 +6,5 @@ derivation {
   builder = ./builder.sh;
   src = ./x86_64-linux-musl-native;
 
-  inherit busybox;
+  busybox = busybox-bin;
 }
