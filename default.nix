@@ -6,17 +6,20 @@ let
     # host packages
     busybox-bin = callPackage ./busybox-bin { };
     gcc-musl-bin = callPackage ./gcc-musl-bin { };
-    patchelf-bin = callPackage ./patchelf-bin { };
 
     # temporary packages
-    make = callPackage ./make { };
-    perl = callPackage ./perl { };
-    m4 = callPackage ./m4 { };
-    bison = callPackage ./bison { };
-    binutils = callPackage ./binutils { };
+    make-tmp = callPackage ./make-tmp { };
+    binutils-tmp = callPackage ./binutils-tmp { };
 
-    tree = callPackage ./tree { };
     # LFS packages
+
+
+    # todo: cleanup
+    # patchelf-bin = callPackage ./patchelf-bin { };
+    # bison = callPackage ./bison { };
+    # perl = callPackage ./perl { };
+    # m4 = callPackage ./m4 { };
+    # tree = callPackage ./tree { };
   };
 in
 pkgs

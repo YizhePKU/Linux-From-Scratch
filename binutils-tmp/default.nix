@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, make }:
+{ busybox-bin, gcc-musl-bin, make-tmp }:
 
 derivation {
   name = "binutils-2.41";
@@ -12,5 +12,5 @@ derivation {
 
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
-  inherit make;
+  make = make-tmp;
 }
