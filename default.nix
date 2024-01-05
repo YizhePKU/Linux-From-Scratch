@@ -12,6 +12,7 @@ let
     make = callPackage ./make { };
     perl = callPackage ./perl { };
     m4 = callPackage ./m4 { };
+    bison = callPackage ./bison { };
     tree = callPackage ./tree { };
 
     # LFS packages
