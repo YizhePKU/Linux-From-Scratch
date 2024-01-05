@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, make }:
+{ busybox-bin, gcc-musl-bin, make-tmp }:
 
 derivation {
   name = "m4-1.4.19";
@@ -12,6 +12,6 @@ derivation {
 
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
-  inherit make;
+  make = make-tmp;
 }
 

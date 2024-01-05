@@ -9,6 +9,9 @@ let
 
     # temporary packages
     make-tmp = callPackage ./make-tmp { };
+    m4-tmp = callPackage ./m4-tmp { };
+    rsync-tmp = callPackage ./rsync-tmp { };
+    linux-headers = callPackage ./linux-headers { };
     coreutils-tmp = callPackage ./coreutils-tmp { };
     binutils-tmp = callPackage ./binutils-tmp { };
 
