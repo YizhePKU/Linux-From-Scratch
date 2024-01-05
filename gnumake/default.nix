@@ -8,6 +8,7 @@ derivation {
     url = https://ftp.gnu.org/gnu/make/make-4.4.1.tar.gz;
     sha256 = "141z25axp7iz11sqci8c312zlmcmfy8bpyjpf0b0gfi8ri3kna7q";
   };
+  __contentAddressed = true;
 
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
