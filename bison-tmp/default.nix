@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, make, m4 }:
+{ busybox-bin, gcc-musl-bin, make-tmp, m4-tmp }:
 
 derivation {
   name = "bison-3.8.2";
@@ -12,6 +12,7 @@ derivation {
 
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
-  inherit make m4;
+  make = make-tmp;
+  m4 = m4-tmp;
 }
 
