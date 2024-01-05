@@ -1,4 +1,4 @@
-{ busybox-bin, patchelf-bin, gcc-musl-bin, gnumake }:
+{ busybox-bin, gcc-musl-bin, make }:
 
 derivation {
   name = "perl-5.38.2";
@@ -11,8 +11,7 @@ derivation {
   __contentAddressed = true;
 
   busybox = busybox-bin;
-  patchelf = patchelf-bin;
   gcc = gcc-musl-bin;
-  gnumake = gnumake;
+  inherit make;
 }
 

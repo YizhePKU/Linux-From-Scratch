@@ -9,7 +9,7 @@ let
     patchelf-bin = callPackage ./patchelf-bin { };
 
     # temporary packages
-    gnumake = callPackage ./gnumake { };
+    make = callPackage ./make { };
     perl = callPackage ./perl { };
     tree = callPackage ./tree { };
 

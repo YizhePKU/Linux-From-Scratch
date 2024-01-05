@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, gnumake }:
+{ busybox-bin, gcc-musl-bin, make }:
 
 derivation {
   name = "unix-tree-2.1.1";
@@ -12,5 +12,5 @@ derivation {
 
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
-  gnumake = gnumake;
+  inherit make;
 }

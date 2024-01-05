@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PATH="$gcc/bin:$busybox/bin:$gnumake/bin"
+export PATH="$gcc/bin:$busybox/bin:$make/bin"
 export LDFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so"
 
 # tree doesn't support out-of-tree build
