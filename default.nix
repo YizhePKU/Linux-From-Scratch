@@ -9,6 +9,7 @@ let
 
     # temporary packages
     make-tmp = callPackage ./make-tmp { };
+    coreutils-tmp = callPackage ./coreutils-tmp { };
     binutils-tmp = callPackage ./binutils-tmp { };
 
     # LFS packages
