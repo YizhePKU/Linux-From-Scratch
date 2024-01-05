@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, patchelf-bin, gnumake }:
+{ busybox-bin, gcc-musl-bin, gnumake }:
 
 derivation {
   name = "unix-tree-2.1.1";
@@ -11,6 +11,5 @@ derivation {
 
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
-  patchelf = patchelf-bin;
-  make = gnumake;
+  gnumake = gnumake;
 }

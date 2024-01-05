@@ -1,4 +1,4 @@
-{ busybox-bin, patchelf-bin, gcc-musl-bin }:
+{ busybox-bin, gcc-musl-bin }:
 
 derivation {
   name = "gnumake-4.4.1";
@@ -10,6 +10,5 @@ derivation {
   };
 
   busybox = busybox-bin;
-  patchelf = patchelf-bin;
   gcc = gcc-musl-bin;
 }
