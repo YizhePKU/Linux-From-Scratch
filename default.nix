@@ -13,8 +13,9 @@ let
     perl = callPackage ./perl { };
     m4 = callPackage ./m4 { };
     bison = callPackage ./bison { };
-    tree = callPackage ./tree { };
+    binutils = callPackage ./binutils { };
 
+    tree = callPackage ./tree { };
     # LFS packages
   };
 in
