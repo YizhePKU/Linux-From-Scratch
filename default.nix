@@ -11,6 +11,7 @@ let
     # temporary packages
     make = callPackage ./make { };
     perl = callPackage ./perl { };
+    m4 = callPackage ./m4 { };
     tree = callPackage ./tree { };
 
     # LFS packages
