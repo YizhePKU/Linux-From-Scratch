@@ -10,6 +10,7 @@ let
     # temporary packages
     make-tmp = callPackage ./make-tmp { };
     cmake-tmp = callPackage ./cmake-tmp { };
+    musl-tmp = callPackage ./musl-tmp { };
 
     # m4-tmp = callPackage ./m4-tmp { };
     # binutils-tmp = callPackage ./binutils-tmp { };
