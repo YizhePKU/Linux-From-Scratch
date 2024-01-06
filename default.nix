@@ -18,6 +18,7 @@ let
     bison-tmp = callPackage ./bison-tmp { };
     gawk-tmp = callPackage ./gawk-tmp { };
     python3-tmp = callPackage ./python3-tmp { };
+    glibc-tmp = callPackage ./glibc-tmp { };
 
     # LFS packages
 
