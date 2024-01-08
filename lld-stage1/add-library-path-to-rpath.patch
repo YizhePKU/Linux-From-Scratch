@@ -1,0 +1,67 @@
+diff --git a/lld/ELF/Driver.cpp b/lld/ELF/Driver.cpp
+index c2059c70e..1bb717732 100644
+--- a/lld/ELF/Driver.cpp
++++ b/lld/ELF/Driver.cpp
+@@ -668,9 +668,60 @@ void LinkerDriver::linkerMain(ArrayRef<const char *> argsArr) {
+   }
+ }
+ 
++// Convert path to absolute path, resolveing symlinks recursively.
++// Returns a &'static str by leaking memory.
++// Returns None if path is non-existent.
++static std::optional<StringRef> real_path(const Twine &path) {
++  auto buffer = SmallVector<char>();
++  auto err = llvm::sys::fs::real_path(path, buffer, true);
++  if (err)
++    return {};
++  std::string *leaked = new std::string(buffer.begin(), buffer.end());
++  return StringRef(*leaked);
++}
++
+ static std::string getRpath(opt::InputArgList &args) {
+-  SmallVector<StringRef, 0> v = args::getStrings(args, OPT_rpath);
+-  return llvm::join(v.begin(), v.end(), ":");
++  SmallVector<StringRef, 0> rpaths = args::getStrings(args, OPT_rpath);
++
++  // Add all used dynamic libraries to the rpath.
++  SmallVector<StringRef, 0> lpaths = args::getStrings(args, OPT_library_path);
++  for (auto &path : lpaths) {
++    // resolve symlinks recursively
++    auto realpath = real_path(path);
++    if (!realpath) {
++      lld::outs() << "YIZHE: ignoring non-existent library path: " << path
++                  << "\n";
++      continue;
++    }
++
++    // Do not add path that are not in the Nix store.
++    auto prefix = realpath->substr(0, 10);
++    if (prefix != "/nix/store") {
++      lld::outs() << "YIZHE: ignoring library path not in Nix store: " << path
++                  << "\n";
++      continue;
++    }
++
++    // For each directory in the library search path (-L...), see if it contains
++    // a dynamic library used by a -l... flag. If so, add the directory to the
++    // rpath. It's important to add the rpath in the order of -L..., so the link
++    // time chosen objects will be those of runtime linking.
++    SmallVector<StringRef, 0> libraries = args::getStrings(args, OPT_library);
++    for (auto &lib : libraries) {
++      std::string filepath = "";
++      filepath += *realpath;
++      filepath += "/lib";
++      filepath += lib;
++      filepath += ".so";
++      if (llvm::sys::fs::exists(filepath)) {
++        lld::outs() << "YIZHE: adding " << *realpath << " to rpath\n";
++        rpaths.push_back(*realpath);
++        break;
++      }
++    }
++  }
++
++  return llvm::join(rpaths.begin(), rpaths.end(), ":");
+ }
+ 
+ // Determines what we should do if there are remaining unresolved
