@@ -10,7 +10,10 @@ let
     # temporary packages
     make-tmp = callPackage ./make-tmp { };
     cmake-tmp = callPackage ./cmake-tmp { };
-    musl-tmp = callPackage ./musl-tmp { };
+    python3-tmp = callPackage ./python3-tmp { };
+    zlib-tmp = callPackage ./zlib-tmp { };
+    git-tmp = callPackage ./git-tmp { };
+
 
     # m4-tmp = callPackage ./m4-tmp { };
     # binutils-tmp = callPackage ./binutils-tmp { };
