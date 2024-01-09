@@ -13,6 +13,10 @@ for patch in $patches; do
 done
 
 cd $TMPDIR
-cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=ON -DCMAKE_INSTALL_PREFIX=$out -DLLVM_TARGETS_TO_BUILD=X86 -DLLVM_ROOT=$llvm $TMPDIR/source/lld
+cmake -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_INSTALL_PREFIX=$out \
+      -DLLVM_TARGETS_TO_BUILD=X86 \
+      -DLLVM_ROOT=$llvm \
+      $TMPDIR/source/lld
 make -j8
 make install
