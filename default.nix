@@ -14,6 +14,10 @@ let
     zlib-tmp = callPackage ./zlib-tmp { };
     git-tmp = callPackage ./git-tmp { };
 
+    # stage1
+    llvm-stage1 = callPackage ./llvm-stage1 { };
+    lld-stage1 = callPackage ./lld-stage1 { };
+    compiler-rt-stage1 = callPackage ./compiler-rt-stage1 { };
 
     # m4-tmp = callPackage ./m4-tmp { };
     # binutils-tmp = callPackage ./binutils-tmp { };
