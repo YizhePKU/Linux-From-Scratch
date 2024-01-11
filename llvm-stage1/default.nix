@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, git-tmp }:
+{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, zlib-tmp, git-tmp }:
 
 derivation {
   name = "llvm-17.0.6";
@@ -11,7 +11,7 @@ derivation {
   __contentAddressed = true;
 
   patches = [
-    
+
   ];
 
   busybox = busybox-bin;
@@ -19,5 +19,6 @@ derivation {
   make = make-tmp;
   cmake = cmake-tmp;
   python3 = python3-tmp;
+  zlib = zlib-tmp;
   git = git-tmp;
 }

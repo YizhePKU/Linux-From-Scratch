@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export PATH="$gcc/bin:$busybox/bin:$make/bin:$cmake/bin:$python3/bin:$git/bin"
-export LDFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so -Wl,--enable-new-dtags -Wl,--rpath=$gcc/lib"
+export LDFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so -Wl,--enable-new-dtags -Wl,--rpath=$gcc/lib -Wl,--rpath=$zlib/lib"
 
 cmake -S $src/clang \
       -B $TMPDIR/build \
