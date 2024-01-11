@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PATH="$clang/bin:$gcc/bin:$busybox/bin:$make/bin:$cmake/bin:$python3/bin:$git/bin"
+export PATH="$llvm/bin:$clang/bin:$gcc/bin:$make/bin:$cmake/bin:$python3/bin:$busybox/bin"
 export CC=clang
 export CFLAGS="-nostdinc -B$gcc/lib -B$gcc/lib/gcc/x86_64-linux-musl/11.2.1 -isystem $gcc/usr/include -isystem $gcc/lib/gcc/x86_64-linux-musl/11.2.1/include"
 export CXXFLAGS="-nostdinc -B$gcc/lib -B$gcc/lib/gcc/x86_64-linux-musl/11.2.1 -isystem $gcc/include/c++/11.2.1 -isystem $gcc/include/c++/11.2.1/x86_64-linux-musl -isystem $gcc/include/c++/11.2.1/backward -isystem $gcc/usr/include -isystem $gcc/lib/gcc/x86_64-linux-musl/11.2.1/include"
@@ -12,7 +12,6 @@ cmake -S $src/lld \
       -B $TMPDIR/build \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=$out \
-      -DLLVM_TARGETS_TO_BUILD=X86 \
       -DLLVM_INCLUDE_TESTS=OFF \
       -DLLVM_ROOT=$llvm \
 
