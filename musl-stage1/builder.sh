@@ -3,7 +3,7 @@
 export PATH="$llvm/bin:$clang/bin:$lld/bin:$make/bin:$busybox/bin"
 export CC=clang
 export CFLAGS="-nostdinc"
-export LDFLAGS="-fuse-ld=lld -nostdinc -nostdlib"
+export LDFLAGS="-nostdlib -fuse-ld=lld"
 
 # copy source to temporary directory
 cp -r $src $TMPDIR/source
