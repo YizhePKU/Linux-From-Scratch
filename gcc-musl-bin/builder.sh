@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu -o pipefail
 
 export PATH="$busybox/bin"
 

@@ -1,6 +1,7 @@
 #!/bin/sh
+set -eu -o pipefail
 
-export PATH="$llvm/bin:$clang/bin:$lld/bin:$cmake/bin:$make/bin:$python3/bin:$busybox/bin"
+export PATH="$lld/bin:$clang/bin:$llvm/bin:$python3/bin:$cmake/bin:$make/bin:$busybox/bin"
 export CFLAGS="-nostdinc -isystem $musl/include -isystem $clang/lib/clang/17/include"
 export CXXFLAGS="-nostdinc -isystem $musl/include -isystem $clang/lib/clang/17/include"
 export LDFLAGS="-nostdlib -fuse-ld=lld -L$musl/lib -L$compilerRt/lib/linux -lc -lclang_rt.builtins-x86_64 -Wl,--rpath=$musl/lib -Wl,--rpath=$compilerRt/lib"

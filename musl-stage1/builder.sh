@@ -1,6 +1,7 @@
 #!/bin/sh
+set -eu -o pipefail
 
-export PATH="$llvm/bin:$clang/bin:$lld/bin:$make/bin:$busybox/bin"
+export PATH="$lld/bin:$clang/bin:$llvm/bin:$make/bin:$busybox/bin"
 export CC=clang
 export CFLAGS="-nostdinc"
 export LDFLAGS="-nostdlib -fuse-ld=lld -L$gcc/lib/gcc/x86_64-linux-musl/11.2.1 -lgcc"

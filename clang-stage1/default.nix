@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, zlib-tmp, llvm-stage1 }:
+{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, zlib-tmp, git-tmp, llvm-stage1 }:
 
 derivation {
   name = "clang-17.0.6";
@@ -16,5 +16,6 @@ derivation {
   cmake = cmake-tmp;
   python3 = python3-tmp;
   zlib = zlib-tmp;
+  git = git-tmp;
   llvm = llvm-stage1;
 }

@@ -3,7 +3,7 @@ let
     let f = import path;
     in f (builtins.intersectAttrs (builtins.functionArgs f) pkgs // overrides);
   pkgs = {
-    # bootstrap packages
+    # bootstrap packages 
     busybox-bin = callPackage ./busybox-bin { };
     gcc-musl-bin = callPackage ./gcc-musl-bin { };
 
@@ -23,18 +23,16 @@ let
     clang-stage1 = callPackage ./clang-stage1 { };
     lld-stage1 = callPackage ./lld-stage1 { };
 
-    # stage1 libraries -- build compiler-rt, musl, libc++ using stage1 compiler
+    # stage1 libraries -- build compiler-rt, musl, libc++ using stage1 compiler, linking against libgcc
     musl-stage1 = callPackage ./musl-stage1 { };
     compiler-rt-stage1 = callPackage ./compiler-rt-stage1 { };
     libunwind-stage1 = callPackage ./libunwind-stage1 { };
     libcxx-stage1 = callPackage ./libcxx-stage1 { };
 
     # stage2 compiler -- build clang and lld using stage1 compiler, linking against stage1 libraries
-    # clang is patched to find standard headers and libraries automatically
-    # lld is patched to add RUNPATH automatically
     # llvm-stage2 = callPackage ./llvm-stage2 { };
-    # clang-stage2 = callPackage ./clang-stage2 { };
-    # lld-stage2 = callPackage ./lld-stage2 { };
+    # clang-stage2 = callPackage ./clang-stage2 { }; # patched to find standard headers and libraries automatically
+    # lld-stage2 = callPackage ./lld-stage2 { }; # patched to add RUNPATH automatically
 
     # LFS libraries -- build compiler-rt, musl, libc++ using stage2 compiler
     # compiler-rt = callPackage ./compiler-rt { };
@@ -47,7 +45,6 @@ let
     # lld = callPackage ./lld { };
 
     # LFS system software
-    # grep-tmp = callPackage ./grep-tmp { };
   };
 in
 pkgs

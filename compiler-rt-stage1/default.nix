@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage1, clang-stage1, lld-stage1, musl-stage1 }:
+{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage1, clang-stage1, lld-stage1, musl-stage1 }:
 
 # Currently, Nix thinks compiler-rt has a runtime dependency on the llvm source.
 # This is because compiler-rt uses __FILE__ to report errors.
@@ -13,6 +13,7 @@ derivation {
   __contentAddressed = true;
 
   busybox = busybox-bin;
+  gcc = gcc-musl-bin;
   make = make-tmp;
   cmake = cmake-tmp;
   python3 = python3-tmp;

@@ -1,7 +1,8 @@
 #!/bin/sh
+set -eu -o pipefail
 
-export PATH="$gcc/bin:$busybox/bin:$make/bin"
-export LDFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so -Wl,--enable-new-dtags -Wl,--rpath=$gcc/lib"
+export PATH="$make/bin:$gcc/bin:$busybox/bin"
+export LDFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so -Wl,--rpath=$gcc/lib"
 
 # copy source to temporary directory
 cp -r $src $TMPDIR/source

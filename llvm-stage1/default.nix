@@ -10,10 +10,6 @@ derivation {
   };
   __contentAddressed = true;
 
-  patches = [
-
-  ];
-
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
   make = make-tmp;
