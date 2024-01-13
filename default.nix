@@ -35,9 +35,10 @@ let
     lld-stage2 = callPackage ./lld-stage2 { }; # patched to add RUNPATH automatically
 
     # LFS libraries -- build compiler-rt, musl, libc++ using stage2 compiler
-    # compiler-rt = callPackage ./compiler-rt { };
-    # musl = callPackage ./musl { };
-    # libcxx = callPackage ./libcxx { };
+    compiler-rt = callPackage ./compiler-rt { };
+    musl = callPackage ./musl { };
+    libunwind = callPackage ./libunwind { };
+    libcxx = callPackage ./libcxx { };
 
     # LFS compiler -- build clang and lld using stage2 compiler, linking against LFS libraries
     # llvm = callPackage ./llvm { };
