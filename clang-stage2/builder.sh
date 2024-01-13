@@ -29,7 +29,8 @@ cmake -S $TMPDIR/source/clang \
       -DCLANG_DEFAULT_CXX_STDLIB="libc++" \
       -DCLANG_DEFAULT_RTLIB="compiler-rt" \
       -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
-      -DCLANG_SYSTEM_INCLUDE_DIRS="$libcxx/include/c++/v1:$libunwind/include:$musl/include:$linuxHeaders/include" \
+      -DCLANG_SYSTEM_C_INCLUDE_DIRS="$musl/include:$libunwind/include:$linuxHeaders/include" \
+      -DCLANG_SYSTEM_CXX_INCLUDE_DIRS="$libcxx/include/c++/v1" \
       -DCLANG_SYSTEM_LIBRARY_DIRS="$libcxx/lib:$libunwind/lib:$musl/lib" \
       -DCLANG_COMPILER_RT_ROOT=$compilerRt \
       -DCLANG_DYNAMIC_LINKER="$musl/lib/ld-musl-x86_64.so.1" \
