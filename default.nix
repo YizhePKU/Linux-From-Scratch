@@ -30,8 +30,8 @@ let
     libcxx-stage1 = callPackage ./libcxx-stage1 { };
 
     # stage2 compiler -- build clang and lld using stage1 compiler, linking against stage1 libraries
-    # llvm-stage2 = callPackage ./llvm-stage2 { };
-    # clang-stage2 = callPackage ./clang-stage2 { }; # patched to find standard headers and libraries automatically
+    llvm-stage2 = callPackage ./llvm-stage2 { };
+    clang-stage2 = callPackage ./clang-stage2 { }; # patched to find standard headers and libraries automatically
     # lld-stage2 = callPackage ./lld-stage2 { }; # patched to add RUNPATH automatically
 
     # LFS libraries -- build compiler-rt, musl, libc++ using stage2 compiler
