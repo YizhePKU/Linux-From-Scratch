@@ -23,10 +23,9 @@ let
     clang-stage1 = callPackage ./clang-stage1 { };
     lld-stage1 = callPackage ./lld-stage1 { };
 
-    # stage1 libraries -- build compiler-rt, musl, libc++ using stage1 compiler, linking against libgcc
+    # stage1 libraries -- build musl, compiler-rt, libc++ using stage1 compiler, static-linked against libgcc
     musl-stage1 = callPackage ./musl-stage1 { };
     compiler-rt-stage1 = callPackage ./compiler-rt-stage1 { };
-    libunwind-stage1 = callPackage ./libunwind-stage1 { };
     libcxx-stage1 = callPackage ./libcxx-stage1 { };
 
     # stage2 compiler -- build clang and lld using stage1 compiler, linking against stage1 libraries
@@ -34,10 +33,9 @@ let
     clang-stage2 = callPackage ./clang-stage2 { }; # patched to find standard headers and libraries automatically
     lld-stage2 = callPackage ./lld-stage2 { }; # patched to add RUNPATH automatically
 
-    # LFS libraries -- build compiler-rt, musl, libc++ using stage2 compiler
-    compiler-rt = callPackage ./compiler-rt { };
+    # LFS libraries -- build musl, compiler-rt, libc++ using stage2 compiler, static-linked against compiler-rt
     musl = callPackage ./musl { };
-    libunwind = callPackage ./libunwind { };
+    compiler-rt = callPackage ./compiler-rt { };
     libcxx = callPackage ./libcxx { };
     zlib = callPackage ./zlib { };
 

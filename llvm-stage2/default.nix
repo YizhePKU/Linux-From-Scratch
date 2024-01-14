@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, zlib-tmp, git-tmp, llvm-stage1, clang-stage1, lld-stage1, musl-stage1, compiler-rt-stage1, libunwind-stage1, libcxx-stage1, linux-headers }:
+{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, zlib-tmp, git-tmp, llvm-stage1, clang-stage1, lld-stage1, musl-stage1, compiler-rt-stage1, libcxx-stage1, linux-headers }:
 
 derivation {
   name = "llvm-17.0.6";
@@ -21,7 +21,6 @@ derivation {
   lld = lld-stage1;
   musl = musl-stage1;
   compilerRt = compiler-rt-stage1;
-  libunwind = libunwind-stage1;
   libcxx = libcxx-stage1;
   linuxHeaders = linux-headers;
 }

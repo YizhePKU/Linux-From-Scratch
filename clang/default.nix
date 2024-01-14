@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, zlib, git-tmp, llvm, clang-stage2, lld-stage2, musl, compiler-rt, libunwind, libcxx, linux-headers }:
+{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, zlib, git-tmp, llvm, clang-stage2, lld-stage2, musl, compiler-rt, libcxx, linux-headers }:
 
 derivation {
   name = "clang-17.0.6";
@@ -23,7 +23,6 @@ derivation {
   lld = lld-stage2;
   musl = musl;
   compilerRt = compiler-rt;
-  libunwind = libunwind;
   libcxx = libcxx;
   linuxHeaders = linux-headers;
 }
