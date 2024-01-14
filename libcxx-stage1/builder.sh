@@ -13,6 +13,7 @@ cmake -S $src/runtimes \
       -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
       -DLIBCXX_HAS_MUSL_LIBC=ON \
       -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
+      -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=ON \
 
 cmake --build $TMPDIR/build -j8
 cmake --install $TMPDIR/build
