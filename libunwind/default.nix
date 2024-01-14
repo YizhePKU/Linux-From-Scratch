@@ -1,7 +1,7 @@
-{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage2, clang-stage2, lld-stage2, musl, compiler-rt, libunwind, linux-headers }:
+{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage2, clang-stage2, lld-stage2, musl, compiler-rt }:
 
 derivation {
-  name = "libc++-17.0.6";
+  name = "libunwind-17.0.6";
   system = "x86_64-linux";
   builder = ./builder.sh;
   src = fetchTarball {
@@ -19,6 +19,4 @@ derivation {
   lld = lld-stage2;
   musl = musl;
   compilerRt = compiler-rt;
-  libunwind = libunwind;
-  linuxHeaders = linux-headers;
 }
