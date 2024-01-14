@@ -112,7 +112,7 @@ index 8dafc3d48..73d48a81e 100644
    llvm::sys::path::append(P, "..", "lib", getTripleString());
    Paths.push_back(std::string(P.str()));
 diff --git a/clang/lib/Driver/ToolChains/Linux.cpp b/clang/lib/Driver/ToolChains/Linux.cpp
-index 1ba222bf8..0c9665e7d 100644
+index 1ba222bf8..eb3c4a12b 100644
 --- a/clang/lib/Driver/ToolChains/Linux.cpp
 +++ b/clang/lib/Driver/ToolChains/Linux.cpp
 @@ -421,6 +421,12 @@ std::string Linux::computeSysRoot() const {
@@ -128,7 +128,7 @@ index 1ba222bf8..0c9665e7d 100644
    const llvm::Triple::ArchType Arch = getArch();
    const llvm::Triple &Triple = getTriple();
  
-@@ -629,6 +635,31 @@ void Linux::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
+@@ -629,6 +635,34 @@ void Linux::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
    if (DriverArgs.hasArg(options::OPT_nostdlibinc))
      return;
  
@@ -154,6 +154,9 @@ index 1ba222bf8..0c9665e7d 100644
 +        addSystemInclude(DriverArgs, CC1Args, dir);
 +      }
 +    }
++    // Add Clang resource directory
++    if (!DriverArgs.hasArg(options::OPT_nobuiltininc) && getTriple().isMusl())
++      addSystemInclude(DriverArgs, CC1Args, ResourceDirInclude);
 +    return;
 +  }
 +
