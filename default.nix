@@ -39,11 +39,12 @@ let
     musl = callPackage ./musl { };
     libunwind = callPackage ./libunwind { };
     libcxx = callPackage ./libcxx { };
+    zlib = callPackage ./zlib { };
 
     # LFS compiler -- build clang and lld using stage2 compiler, linking against LFS libraries
-    # llvm = callPackage ./llvm { };
-    # clang = callPackage ./clang { };
-    # lld = callPackage ./lld { };
+    llvm = callPackage ./llvm { };
+    clang = callPackage ./clang { };
+    lld = callPackage ./lld { };
 
     # LFS system software
   };
