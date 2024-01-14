@@ -1,8 +1,8 @@
 diff --git a/clang/CMakeLists.txt b/clang/CMakeLists.txt
-index f7936d72e..57ede82da 100644
+index f7936d72e..2a61bf286 100644
 --- a/clang/CMakeLists.txt
 +++ b/clang/CMakeLists.txt
-@@ -167,6 +167,21 @@ endif()
+@@ -167,6 +167,24 @@ endif()
  include(CheckIncludeFile)
  check_include_file(sys/resource.h CLANG_HAVE_RLIMITS)
  
@@ -12,8 +12,11 @@ index f7936d72e..57ede82da 100644
 +set(CLANG_SYSTEM_CXX_INCLUDE_DIRS "" CACHE STRING
 +  "Colon separated list of directories clang will search for C++ headers. If non-empty, Clang will not search default locations.")
 +
-+set(CLANG_SYSTEM_LIBRARY_DIRS "" CACHE STRING
-+  "Colon separated list of directories clang will search for standard libraries. If non-empty, Clang will not search default locations.")
++set(CLANG_SYSTEM_C_LIBRARY_DIRS "" CACHE STRING
++  "Colon separated list of directories clang will search for C standard libraries. If non-empty, Clang will not search default locations.")
++
++set(CLANG_SYSTEM_CXX_LIBRARY_DIRS "" CACHE STRING
++  "Colon separated list of directories clang will search for C++ standard libraries. If non-empty, Clang will not search default locations.")
 +
 +set(CLANG_COMPILER_RT_ROOT "" CACHE STRING
 +  "Root of compiler-rt installation, empty for platform default.")
@@ -25,10 +28,10 @@ index f7936d72e..57ede82da 100644
    "Relative directory from the Clang binary to its resource files.")
  
 diff --git a/clang/include/clang/Config/config.h.cmake b/clang/include/clang/Config/config.h.cmake
-index a54a26cd3..5c81c6ab2 100644
+index a54a26cd3..4e15a3db0 100644
 --- a/clang/include/clang/Config/config.h.cmake
 +++ b/clang/include/clang/Config/config.h.cmake
-@@ -77,4 +77,19 @@
+@@ -77,4 +77,22 @@
  /* Spawn a new process clang.exe for the CC1 tool invocation, when necessary */
  #cmakedefine01 CLANG_SPAWN_CC1
  
@@ -38,8 +41,11 @@ index a54a26cd3..5c81c6ab2 100644
 +/* Colon separated list of directories clang will search for C++ headers. If non-empty, Clang will not search default locations. */
 +#define CLANG_SYSTEM_CXX_INCLUDE_DIRS "${CLANG_SYSTEM_CXX_INCLUDE_DIRS}"
 +
-+/* Colon separated list of directories clang will search for standard libraries. If non-empty, Clang will not search default locations. */
-+#define CLANG_SYSTEM_LIBRARY_DIRS "${CLANG_SYSTEM_LIBRARY_DIRS}"
++/* Colon separated list of directories clang will search for C standard libraries. If non-empty, Clang will not search default locations. */
++#define CLANG_SYSTEM_C_LIBRARY_DIRS "${CLANG_SYSTEM_C_LIBRARY_DIRS}"
++
++/* Colon separated list of directories clang will search for C++ standard libraries. If non-empty, Clang will not search default locations. */
++#define CLANG_SYSTEM_CXX_LIBRARY_DIRS "${CLANG_SYSTEM_CXX_LIBRARY_DIRS}"
 +
 +/* Root of compiler-rt installation, empty for platform default. */
 +#define CLANG_COMPILER_RT_ROOT "${CLANG_COMPILER_RT_ROOT}"
@@ -49,10 +55,40 @@ index a54a26cd3..5c81c6ab2 100644
 +
  #endif
 diff --git a/clang/lib/Driver/ToolChain.cpp b/clang/lib/Driver/ToolChain.cpp
-index 8dafc3d48..a636a78d6 100644
+index 8dafc3d48..73d48a81e 100644
 --- a/clang/lib/Driver/ToolChain.cpp
 +++ b/clang/lib/Driver/ToolChain.cpp
-@@ -595,6 +595,14 @@ StringRef ToolChain::getOSLibName() const {
+@@ -92,6 +92,29 @@ ToolChain::ToolChain(const Driver &D, const llvm::Triple &T,
+     addIfExists(getFilePaths(), Path);
+   for (const auto &Path : getArchSpecificLibPaths())
+     addIfExists(getFilePaths(), Path);
++
++  // Check for configure-time system library directories.
++  if (!Args.hasArg(options::OPT_nostdlib)) {
++    StringRef ClangSystemCLibraryDirs(CLANG_SYSTEM_C_LIBRARY_DIRS);
++    StringRef ClangSystemCXXLibraryDirs(CLANG_SYSTEM_CXX_LIBRARY_DIRS);
++    // Add C library directories
++    if (ClangSystemCLibraryDirs != "") {
++      SmallVector<StringRef, 5> dirs;
++      ClangSystemCLibraryDirs.split(dirs, ":");
++      for (StringRef dir : dirs) {
++        addIfExists(getFilePaths(), std::string(dir));
++      }
++    }
++    // Add C++ library directories, unless -nostdlib++ is given
++    if (ClangSystemCXXLibraryDirs != "" &&
++        !Args.hasArg(options::OPT_nostdlibxx)) {
++      SmallVector<StringRef, 5> dirs;
++      ClangSystemCXXLibraryDirs.split(dirs, ":");
++      for (StringRef dir : dirs) {
++        addIfExists(getFilePaths(), std::string(dir));
++      }
++    }
++  }
+ }
+ 
+ llvm::Expected<std::unique_ptr<llvm::MemoryBuffer>>
+@@ -595,6 +618,14 @@ StringRef ToolChain::getOSLibName() const {
  }
  
  std::string ToolChain::getCompilerRTPath() const {
@@ -67,21 +103,10 @@ index 8dafc3d48..a636a78d6 100644
    SmallString<128> Path(getDriver().ResourceDir);
    if (isBareMetal()) {
      llvm::sys::path::append(Path, "lib", getOSLibName());
-@@ -722,6 +730,18 @@ ToolChain::path_list ToolChain::getRuntimePaths() const {
+@@ -722,6 +753,7 @@ ToolChain::path_list ToolChain::getRuntimePaths() const {
  
  ToolChain::path_list ToolChain::getStdlibPaths() const {
    path_list Paths;
-+
-+  // Check for configure-time system library directories.
-+  StringRef ClangSystemLibraryDirs(CLANG_SYSTEM_LIBRARY_DIRS);
-+  if (ClangSystemLibraryDirs != "") {
-+    SmallVector<StringRef, 5> dirs;
-+    ClangSystemLibraryDirs.split(dirs, ":");
-+    for (StringRef dir : dirs) {
-+      Paths.push_back(std::string(dir));
-+    }
-+    return Paths;
-+  }
 +
    SmallString<128> P(D.Dir);
    llvm::sys::path::append(P, "..", "lib", getTripleString());
