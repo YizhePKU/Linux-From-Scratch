@@ -45,6 +45,8 @@ let
     lld = callPackage ./lld { };
 
     # LFS system software
+    make = callPackage ./make { };
+    busybox = callPackage ./busybox { };
   };
 in
 pkgs
