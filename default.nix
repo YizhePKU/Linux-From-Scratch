@@ -50,6 +50,7 @@ let
     perl = callPackage ./perl { };
     openssl = callPackage ./openssl { };
     cmake = callPackage ./cmake { };
+    curl = callPackage ./curl { };
   };
 in
 pkgs
