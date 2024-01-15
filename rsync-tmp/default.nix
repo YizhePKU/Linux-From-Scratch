@@ -4,9 +4,9 @@ derivation {
   name = "rsync-3.2.7";
   system = "x86_64-linux";
   builder = ./builder.sh;
-  src = fetchTarball {
+  src = builtins.fetchurl {
     url = https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz;
-    sha256 = "0prp3dsdqpfw8glpj1fkgjivjr75330jn7bfxqaybd1ky6vzjdjl";
+    sha256 = "1fzj8q9w8bgvi3j162rlqymbdx5cgnk29dszik2ph26idqzrszaf";
   };
   __contentAddressed = true;
 

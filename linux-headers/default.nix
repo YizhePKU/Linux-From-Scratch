@@ -4,9 +4,9 @@ derivation {
   name = "linux-headers-6.6.9";
   system = "x86_64-linux";
   builder = ./builder.sh;
-  src = fetchTarball {
+  src = builtins.fetchurl {
     url = https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.9.tar.xz;
-    sha256 = "19lrh13mjh3jmk1qa8dwl9mv6cr02qnj8y8rmk53k9hbrkrgqryw";
+    sha256 = "1cs8ym3yq9czjx6sbxpmn16l6a577mc4c1ff7nk1p2gw1jpnbg4f";
   };
   __contentAddressed = true;
 

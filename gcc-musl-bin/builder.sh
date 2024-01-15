@@ -3,4 +3,5 @@ set -eu -o pipefail
 
 export PATH="$busybox/bin"
 
-cp -r $src $out
+mkdir $out && cd $out
+tar xf $src --strip-components=1

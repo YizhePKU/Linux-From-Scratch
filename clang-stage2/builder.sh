@@ -5,16 +5,16 @@ export PATH="$lld/bin:$clang/bin:$llvm/bin:$git/bin:$python3/bin:$cmake/bin:$mak
 export CFLAGS="-nostdinc -isystem $musl/include -isystem $linuxHeaders/include -isystem $clang/lib/clang/17/include"
 export CXXFLAGS="-nostdinc -isystem $libcxx/include/c++/v1 -isystem $musl/include -isystem $linuxHeaders/include -isystem $clang/lib/clang/17/include"
 
-# copy source to temporary directory
-cp -r $src $TMPDIR/source
-chmod -R +w $TMPDIR/source
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
 
-# apply patches
-cd $TMPDIR/source
+# patch phase
 for patch in $patches; do
     git apply $patch
 done
 
+# build phase
 cmake -S $TMPDIR/source/clang \
       -B $TMPDIR/build \
       -DCMAKE_BUILD_TYPE=Release \

@@ -4,9 +4,9 @@ derivation {
   name = "openssl-3.2.0";
   system = "x86_64-linux";
   builder = ./builder.sh;
-  src = fetchTarball {
+  src = builtins.fetchurl {
     url = https://www.openssl.org/source/openssl-3.2.0.tar.gz;
-    sha256 = "139b2cpb0na57yvkc9959v4n290p20bw2pfa61v647zjp8i6klh5";
+    sha256 = "03k9nhz1igzi5hm9ck2bhj25dffs4ngglsawzc33fhvygkq2dj0l";
   };
   __contentAddressed = true;
 

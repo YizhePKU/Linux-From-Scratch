@@ -4,9 +4,9 @@ derivation {
   name = "musl-1.2.4";
   system = "x86_64-linux";
   builder = ./builder.sh;
-  src = fetchTarball {
+  src = builtins.fetchurl {
     url = https://musl.libc.org/releases/musl-1.2.4.tar.gz;
-    sha256 = "0mbifyamvs9hrz8dcmmqhsr5q45zmd7v3w3y7fn4i3cq0ciipz2f";
+    sha256 = "0fgh2hhsbaksx7my6yiva4jqixi6hxwxx20ivb0afwjk7piyldbs";
   };
   __contentAddressed = true;
 

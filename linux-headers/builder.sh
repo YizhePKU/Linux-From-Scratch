@@ -4,9 +4,9 @@ set -eu -o pipefail
 export PATH="$rsync/bin:$make/bin:$gcc/bin:$busybox/bin"
 export HOSTCFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so"
 
-# copy source to temporary directory
-cp -r $src $TMPDIR/source
-chmod -R +w $TMPDIR/source
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
 
-cd $TMPDIR/source
+# build phase
 make headers_install ARCH=x86_64 INSTALL_HDR_PATH=$out

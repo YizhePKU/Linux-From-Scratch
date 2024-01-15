@@ -4,7 +4,12 @@ set -eu -o pipefail
 export PATH="$llvm/bin:$git/bin:$python3/bin:$cmake/bin:$make/bin:$gcc/bin:$busybox/bin"
 export LDFLAGS="-Wl,--dynamic-linker=$gcc/lib/libc.so -Wl,--rpath=$gcc/lib -Wl,--rpath=$zlib/lib"
 
-cmake -S $src/clang \
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
+
+# build phase
+cmake -S $TMPDIR/source/clang \
       -B $TMPDIR/build \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=$out \

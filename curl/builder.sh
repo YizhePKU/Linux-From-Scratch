@@ -3,7 +3,12 @@ set -eu -o pipefail
 
 export PATH="$lld/bin:$clang/bin:$llvm/bin:$cmake/bin:$make/bin:$busybox/bin"
 
-cmake -S $src \
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
+
+# build phase
+cmake -S $TMPDIR/source \
       -B $TMPDIR/build \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=$out \

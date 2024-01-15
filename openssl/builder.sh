@@ -3,14 +3,14 @@ set -eu -o pipefail
 
 export PATH="$perl/bin:$lld/bin:$clang/bin:$llvm/bin:$make/bin:$busybox/bin"
 
-# copy source to temporary directory
-cp -r $src $TMPDIR/source
-chmod -R +w $TMPDIR/source
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
 
-# patch shebang
-sed -i "s|#! /usr/bin/env perl|#!$perl/bin/perl|" $TMPDIR/source/Configure
+# patch phase
+sed -i "s|#! /usr/bin/env perl|#!$perl/bin/perl|" ./Configure
 
-cd $TMPDIR/source
+# build phase
 ./Configure --prefix=$out --libdir=lib
 make -j8 CC=clang
 make install

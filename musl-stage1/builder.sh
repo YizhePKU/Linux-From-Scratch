@@ -6,11 +6,10 @@ export CC=clang
 export CFLAGS="-nostdinc"
 export LDFLAGS="-nostdlib -fuse-ld=lld -L$gcc/lib/gcc/x86_64-linux-musl/11.2.1 -lgcc"
 
-# copy source to temporary directory
-cp -r $src $TMPDIR/source
-chmod -R +w $TMPDIR/source
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
 
-cd $TMPDIR
-$TMPDIR/source/configure --prefix=$out --syslibdir=$out/lib
+./configure --prefix=$out --syslibdir=$out/lib
 make -j8
 make install

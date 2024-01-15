@@ -4,9 +4,9 @@ derivation {
   name = "zlib-1.3";
   system = "x86_64-linux";
   builder = ./builder.sh;
-  src = fetchTarball {
+  src = builtins.fetchurl {
     url = https://www.zlib.net/zlib-1.3.tar.xz;
-    sha256 = "0s1amwva0ckfyj7ibx6fcfvl2ih29mccwrwpxyiv2w1rjnpgib15";
+    sha256 = "19sh61lf93dkdqrm322wm25mir8ig9ib99bbr977f38xis4s56wa";
   };
   __contentAddressed = true;
 

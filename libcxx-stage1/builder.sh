@@ -6,7 +6,12 @@ export CFLAGS="-nostdlibinc -isystem $musl/include -isystem $linuxHeaders/includ
 export CXXFLAGS="-nostdlibinc -isystem $musl/include -isystem $linuxHeaders/include"
 export LDFLAGS="-nostdlib -fuse-ld=lld -L$musl/lib -L$compilerRt/lib/linux -lc -lclang_rt.builtins-x86_64 -Wl,--rpath=$musl/lib -Wl,--rpath=$out/lib"
 
-cmake -S $src/runtimes \
+# unpack phase
+mkdir $TMPDIR/source && cd $TMPDIR/source
+tar xf $src --strip-components=1
+
+# build phase
+cmake -S $TMPDIR/source/runtimes \
       -B $TMPDIR/build \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=$out \

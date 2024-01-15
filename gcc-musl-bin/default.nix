@@ -4,9 +4,9 @@ derivation {
   name = "gcc-musl-bin";
   system = "x86_64-linux";
   builder = ./builder.sh;
-  src = fetchTarball {
+  src = builtins.fetchurl {
     url = https://musl.cc/x86_64-linux-musl-native.tgz;
-    sha256 = "140gi72svsgs1qp94mh47763iv62qgpv5p0z9jsr10rnb0hc9273";
+    sha256 = "1bgkrvdrffn3awbnwslz4p0jmy7f5rzfzmwkp6zvvgf2ygqbc7gb";
   };
   __contentAddressed = true;
 
