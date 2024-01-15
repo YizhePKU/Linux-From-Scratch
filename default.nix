@@ -48,6 +48,7 @@ let
     make = callPackage ./make { };
     busybox = callPackage ./busybox { };
     perl = callPackage ./perl { };
+    openssl = callPackage ./openssl { };
   };
 in
 pkgs
