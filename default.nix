@@ -52,6 +52,7 @@ let
     cmake = callPackage ./cmake { };
     curl = callPackage ./curl { };
     git = callPackage ./git { };
+    ncurses = callPackage ./ncurses { };
   };
 in
 pkgs
