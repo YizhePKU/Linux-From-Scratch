@@ -53,6 +53,7 @@ let
     curl = callPackage ./curl { };
     git = callPackage ./git { };
     ncurses = callPackage ./ncurses { };
+    python3 = callPackage ./python3 { };
   };
 in
 pkgs
