@@ -51,6 +51,7 @@ let
     openssl = callPackage ./openssl { };
     cmake = callPackage ./cmake { };
     curl = callPackage ./curl { };
+    git = callPackage ./git { };
   };
 in
 pkgs
