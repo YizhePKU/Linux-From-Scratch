@@ -47,6 +47,7 @@ let
     # LFS system software
     make = callPackage ./make { };
     busybox = callPackage ./busybox { };
+    perl = callPackage ./perl { };
   };
 in
 pkgs
