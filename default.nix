@@ -49,6 +49,7 @@ let
     busybox = callPackage ./busybox { };
     perl = callPackage ./perl { };
     openssl = callPackage ./openssl { };
+    cmake = callPackage ./cmake { };
   };
 in
 pkgs
