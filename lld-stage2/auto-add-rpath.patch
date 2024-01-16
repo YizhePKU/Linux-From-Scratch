@@ -1,70 +1,37 @@
-diff --git a/lld/ELF/Driver.cpp b/lld/ELF/Driver.cpp
-index c2059c70e..11a610e8d 100644
---- a/lld/ELF/Driver.cpp
-+++ b/lld/ELF/Driver.cpp
-@@ -668,9 +668,63 @@ void LinkerDriver::linkerMain(ArrayRef<const char *> argsArr) {
-   }
- }
+diff --git a/lld/ELF/SyntheticSections.cpp b/lld/ELF/SyntheticSections.cpp
+index de25750bf..d64c6f602 100644
+--- a/lld/ELF/SyntheticSections.cpp
++++ b/lld/ELF/SyntheticSections.cpp
+@@ -1311,9 +1311,30 @@ DynamicSection<ELFT>::computeContents() {
+   for (StringRef s : config->auxiliaryList)
+     addInt(DT_AUXILIARY, part.dynStrTab->addString(s));
  
-+// Convert path to absolute path, resolveing symlinks recursively.
-+// Returns None if path is non-existent.
-+static std::optional<std::string> real_path(const Twine &path) {
-+  auto buffer = SmallVector<char>();
-+  auto err = llvm::sys::fs::real_path(path, buffer, true);
-+  if (err)
-+    return {};
-+  return std::string(buffer.begin(), buffer.end());
-+}
-+
-+// Get library paths that should be automatically added as RPATH.
-+static SmallVector<std::string, 0> getAutoRpath(opt::InputArgList &args) {
-+  SmallVector<StringRef, 0> lpaths = args::getStrings(args, OPT_library_path);
-+  SmallVector<std::string, 0> rpaths;
-+  for (auto &path : lpaths) {
-+    // resolve symlinks recursively
-+    auto realpath = real_path(path);
-+    if (!realpath) {
-+      continue;
-+    }
-+
-+    // Do not add path that are not in the Nix store.
-+    auto prefix = realpath->substr(0, 10);
-+    if (prefix != "/nix/store") {
-+      continue;
-+    }
-+
-+    // For each directory in the library search path (-L...), see if it contains
-+    // a dynamic library used by a -l... flag. If so, add the directory to the
-+    // rpath. It's important to add the rpath in the order of -L..., so the link
-+    // time chosen objects will be those of runtime linking.
-+    SmallVector<StringRef, 0> libraries = args::getStrings(args, OPT_library);
-+    for (auto &lib : libraries) {
-+      std::string filepath = "";
-+      filepath += *realpath;
-+      filepath += "/lib";
-+      filepath += lib;
-+      filepath += ".so";
-+      if (llvm::sys::fs::exists(filepath)) {
-+        rpaths.push_back(*realpath);
-+        break;
+-  if (!config->rpath.empty())
++  // Automatically add library paths in the Nix store to RPATH.
++  SmallSetVector<StringRef, 5> rpaths;
++  if (!config->rpath.empty()) {
++    rpaths.insert(config->rpath);
++  }
++  for (SharedFile *file : ctx.sharedFiles) {
++    // Only add RPATH if needed.
++    if (file->isNeeded) {
++      StringRef dir = llvm::sys::path::parent_path(file->getName());
++      // Only add paths in the Nix store.
++      if (dir.starts_with("/nix/store")) {
++        rpaths.insert(dir);
 +      }
 +    }
 +  }
-+  return rpaths;
-+}
++  // Leaking memory here, because I can't figure out the lifetime requirement of
++  // `part.dynStrTab->addString()`. Overwriting `config->rpath` also causes
++  // lifetime issues.
++  StringRef rpath =
++      *new std::string(llvm::join(rpaths.begin(), rpaths.end(), ":"));
 +
- static std::string getRpath(opt::InputArgList &args) {
--  SmallVector<StringRef, 0> v = args::getStrings(args, OPT_rpath);
--  return llvm::join(v.begin(), v.end(), ":");
-+  SmallVector<StringRef, 0> rpaths = args::getStrings(args, OPT_rpath);
-+
-+  // Automatically add dynamic library path to the rpath.
-+  auto autoRpaths = getAutoRpath(args);
-+  for (auto &autoRpath : autoRpaths) {
-+    rpaths.push_back(StringRef(autoRpath));
-+  }
-+
-+  return llvm::join(rpaths.begin(), rpaths.end(), ":");
- }
++  if (!rpath.empty())
+     addInt(config->enableNewDtags ? DT_RUNPATH : DT_RPATH,
+-           part.dynStrTab->addString(config->rpath));
++           part.dynStrTab->addString(rpath));
  
- // Determines what we should do if there are remaining unresolved
+   for (SharedFile *file : ctx.sharedFiles)
+     if (file->isNeeded)
