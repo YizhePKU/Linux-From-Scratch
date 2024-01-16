@@ -10,7 +10,7 @@ derivation {
   };
   __contentAddressed = true;
 
-  patches = [ ./auto-add-rpath.patch ];
+  patches = [ ./auto-add-rpath.patch ./sort-input-files.patch ];
 
   busybox = busybox-bin;
   make = make-tmp;
