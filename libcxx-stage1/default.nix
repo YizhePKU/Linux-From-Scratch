@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage1, clang-stage1, lld-stage1, musl-stage1, compiler-rt-stage1, linux-headers }:
+{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage1, lld-stage1, clang-stage1, musl-stage1, linux-headers }:
 
 derivation {
   name = "libc++-17.0.6";
@@ -11,13 +11,13 @@ derivation {
   __contentAddressed = true;
 
   busybox = busybox-bin;
+  gcc = gcc-musl-bin;
   make = make-tmp;
   cmake = cmake-tmp;
   python3 = python3-tmp;
   llvm = llvm-stage1;
-  clang = clang-stage1;
   lld = lld-stage1;
+  clang = clang-stage1;
   musl = musl-stage1;
-  compilerRt = compiler-rt-stage1;
   linuxHeaders = linux-headers;
 }

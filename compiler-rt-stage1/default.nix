@@ -1,7 +1,5 @@
-{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage1, clang-stage1, lld-stage1, musl-stage1 }:
+{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, llvm-stage1, lld-stage1, clang-stage1, musl-stage1 }:
 
-# Currently, Nix thinks compiler-rt has a runtime dependency on the llvm source.
-# This is because compiler-rt uses __FILE__ to report errors.
 derivation {
   name = "compiler-rt-17.0.6";
   system = "x86_64-linux";
@@ -18,7 +16,7 @@ derivation {
   cmake = cmake-tmp;
   python3 = python3-tmp;
   llvm = llvm-stage1;
-  clang = clang-stage1;
   lld = lld-stage1;
+  clang = clang-stage1;
   musl = musl-stage1;
 }

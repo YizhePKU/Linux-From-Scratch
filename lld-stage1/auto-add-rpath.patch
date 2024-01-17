@@ -1,0 +1,37 @@
+diff --git a/lld/ELF/SyntheticSections.cpp b/lld/ELF/SyntheticSections.cpp
+index de25750bf..d64c6f602 100644
+--- a/lld/ELF/SyntheticSections.cpp
++++ b/lld/ELF/SyntheticSections.cpp
+@@ -1311,9 +1311,30 @@ DynamicSection<ELFT>::computeContents() {
+   for (StringRef s : config->auxiliaryList)
+     addInt(DT_AUXILIARY, part.dynStrTab->addString(s));
+ 
+-  if (!config->rpath.empty())
++  // Automatically add library paths in the Nix store to RPATH.
++  SmallSetVector<StringRef, 5> rpaths;
++  if (!config->rpath.empty()) {
++    rpaths.insert(config->rpath);
++  }
++  for (SharedFile *file : ctx.sharedFiles) {
++    // Only add RPATH if needed.
++    if (file->isNeeded) {
++      StringRef dir = llvm::sys::path::parent_path(file->getName());
++      // Only add paths in the Nix store.
++      if (dir.starts_with("/nix/store")) {
++        rpaths.insert(dir);
++      }
++    }
++  }
++  // Leaking memory here, because I can't figure out the lifetime requirement of
++  // `part.dynStrTab->addString()`. Overwriting `config->rpath` also causes
++  // lifetime issues.
++  StringRef rpath =
++      *new std::string(llvm::join(rpaths.begin(), rpaths.end(), ":"));
++
++  if (!rpath.empty())
+     addInt(config->enableNewDtags ? DT_RUNPATH : DT_RPATH,
+-           part.dynStrTab->addString(config->rpath));
++           part.dynStrTab->addString(rpath));
+ 
+   for (SharedFile *file : ctx.sharedFiles)
+     if (file->isNeeded)

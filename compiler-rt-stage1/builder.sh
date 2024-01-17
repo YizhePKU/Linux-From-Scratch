@@ -1,9 +1,9 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$python3/bin:$cmake/bin:$make/bin:$busybox/bin"
-export CFLAGS="-nostdinc -isystem $musl/include -isystem $clang/lib/clang/17/include"
-export LDFLAGS="-nostdlib -fuse-ld=lld -L$gcc/lib/gcc/x86_64-linux-musl/11.2.1 -lgcc"
+export PATH="$clang/bin:$lld/bin:$llvm/bin:$python3/bin:$cmake/bin:$make/bin:$busybox/bin"
+export CFLAGS="-I$musl/include"
+export LDFLAGS="-L$gcc/lib/gcc/x86_64-linux-musl/11.2.1 -lgcc --rtlib=libgcc --unwindlib=none"
 
 # unpack phase
 mkdir $TMPDIR/source && cd $TMPDIR/source

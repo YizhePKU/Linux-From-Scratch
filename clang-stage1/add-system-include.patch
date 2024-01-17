@@ -1,0 +1,14 @@
+diff --git a/clang/lib/Driver/ToolChains/Linux.cpp b/clang/lib/Driver/ToolChains/Linux.cpp
+index 49f56991b..238a794e5 100644
+--- a/clang/lib/Driver/ToolChains/Linux.cpp
++++ b/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -635,6 +635,9 @@ void Linux::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
+   if (DriverArgs.hasArg(options::OPT_nostdlibinc))
+     return;
+ 
++  // Add ../include before everything else.
++  addSystemInclude(DriverArgs, CC1Args, concat(D.Dir, "/../include"));
++
+   // LOCAL_INCLUDE_DIR
+   addSystemInclude(DriverArgs, CC1Args, concat(SysRoot, "/usr/local/include"));
+   // TOOL_INCLUDE_DIR

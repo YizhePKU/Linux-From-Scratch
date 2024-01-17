@@ -1,0 +1,43 @@
+diff --git a/clang/CMakeLists.txt b/clang/CMakeLists.txt
+index f7936d72e..4699f3d9f 100644
+--- a/clang/CMakeLists.txt
++++ b/clang/CMakeLists.txt
+@@ -167,6 +167,9 @@ endif()
+ include(CheckIncludeFile)
+ check_include_file(sys/resource.h CLANG_HAVE_RLIMITS)
+ 
++set(CLANG_DYNAMIC_LINKER "" CACHE STRING
++  "Dynamic linker to use, empty for platform default.")
++
+ set(CLANG_RESOURCE_DIR "" CACHE STRING
+   "Relative directory from the Clang binary to its resource files.")
+ 
+diff --git a/clang/include/clang/Config/config.h.cmake b/clang/include/clang/Config/config.h.cmake
+index a54a26cd3..6af5941e9 100644
+--- a/clang/include/clang/Config/config.h.cmake
++++ b/clang/include/clang/Config/config.h.cmake
+@@ -77,4 +77,7 @@
+ /* Spawn a new process clang.exe for the CC1 tool invocation, when necessary */
+ #cmakedefine01 CLANG_SPAWN_CC1
+ 
++/* Dynamic linker to use, empty for platform default. */
++#define CLANG_DYNAMIC_LINKER "${CLANG_DYNAMIC_LINKER}"
++
+ #endif
+diff --git a/clang/lib/Driver/ToolChains/Linux.cpp b/clang/lib/Driver/ToolChains/Linux.cpp
+index 1ba222bf8..49f56991b 100644
+--- a/clang/lib/Driver/ToolChains/Linux.cpp
++++ b/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -421,6 +421,12 @@ std::string Linux::computeSysRoot() const {
+ }
+ 
+ std::string Linux::getDynamicLinker(const ArgList &Args) const {
++  // Check for configure-time dynamic linker.
++  StringRef ClangDynamicLinker(CLANG_DYNAMIC_LINKER);
++  if (ClangDynamicLinker != "") {
++    return ClangDynamicLinker.str();
++  }
++
+   const llvm::Triple::ArchType Arch = getArch();
+   const llvm::Triple &Triple = getTriple();
+ 

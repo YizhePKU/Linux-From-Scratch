@@ -1,4 +1,4 @@
-{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, zlib-tmp, git-tmp, llvm-stage1 }:
+{ busybox-bin, gcc-musl-bin, make-tmp, cmake-tmp, python3-tmp, git-tmp, llvm-stage1 }:
 
 derivation {
   name = "lld-17.0.6";
@@ -10,12 +10,13 @@ derivation {
   };
   __contentAddressed = true;
 
+  patches = [ ./auto-add-rpath.patch ];
+
   busybox = busybox-bin;
   gcc = gcc-musl-bin;
   make = make-tmp;
   cmake = cmake-tmp;
   python3 = python3-tmp;
-  zlib = zlib-tmp;
   git = git-tmp;
   llvm = llvm-stage1;
 }
