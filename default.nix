@@ -29,7 +29,7 @@ let
     libcxx-stage1 = callPackage ./libcxx-stage1 { };
 
     # stage1 toolchain
-    # llvm-toolchain-stage1 = callPackage ./llvm-toolchain-stage1 { };
+    llvm-toolchain-stage1 = callPackage ./llvm-toolchain-stage1 { };
 
     # stage2 runtime -- build musl, compiler-rt, libc++ using stage1 compiler, static-linked against compiler-rt
     # musl = callPackage ./musl { };
