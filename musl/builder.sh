@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$make/bin:$busybox/bin"
+export PATH="$make/bin:$toolchain/bin:$busybox/bin"
 export CC=clang
 
 # unpack phase

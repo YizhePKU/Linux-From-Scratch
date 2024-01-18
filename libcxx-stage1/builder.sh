@@ -15,7 +15,6 @@ cmake -S $TMPDIR/source/runtimes \
       -B $TMPDIR/build \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=$out \
-      -DCMAKE_INSTALL_RPATH=$out/lib \
       -DLLVM_ENABLE_RUNTIMES="libunwind;libcxxabi;libcxx" \
       -DLIBCXX_HAS_MUSL_LIBC=ON \
       -DLIBCXXABI_USE_LLVM_UNWINDER=ON \

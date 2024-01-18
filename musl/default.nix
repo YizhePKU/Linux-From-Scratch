@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, llvm-stage2, clang-stage2, lld-stage2 }:
+{ busybox-bin, llvm-toolchain-stage1, make-tmp }:
 
 derivation {
   name = "musl-1.2.4";
@@ -11,8 +11,6 @@ derivation {
   __contentAddressed = true;
 
   busybox = busybox-bin;
+  toolchain = llvm-toolchain-stage1;
   make = make-tmp;
-  llvm = llvm-stage2;
-  clang = clang-stage2;
-  lld = lld-stage2;
 }

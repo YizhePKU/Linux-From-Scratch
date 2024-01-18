@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$python3/bin:$cmake/bin:$make/bin:$busybox/bin"
+export PATH="$python3/bin:$cmake/bin:$make/bin:$toolchain/bin:$busybox/bin"
 
 # unpack phase
 mkdir $TMPDIR/source && cd $TMPDIR/source

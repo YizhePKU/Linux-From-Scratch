@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, llvm-stage2, clang-stage2, lld-stage2, compiler-rt, musl, linux-headers }:
+{ busybox-bin, llvm-toolchain-stage1, make-tmp, musl }:
 
 derivation {
   name = "zlib-1.3";
@@ -11,12 +11,8 @@ derivation {
   __contentAddressed = true;
 
   busybox = busybox-bin;
+  toolchain = llvm-toolchain-stage1;
   make = make-tmp;
-  llvm = llvm-stage2;
-  clang = clang-stage2;
-  lld = lld-stage2;
-  compilerRt = compiler-rt;
-  musl = musl;
-  linuxHeaders = linux-headers;
+  inherit musl;
 }
 

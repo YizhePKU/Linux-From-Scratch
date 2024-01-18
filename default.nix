@@ -32,10 +32,10 @@ let
     llvm-toolchain-stage1 = callPackage ./llvm-toolchain-stage1 { };
 
     # stage2 runtime -- build musl, compiler-rt, libc++ using stage1 compiler, static-linked against compiler-rt
-    # musl = callPackage ./musl { };
-    # compiler-rt = callPackage ./compiler-rt { };
-    # libcxx = callPackage ./libcxx { };
-    # zlib = callPackage ./zlib { };
+    musl = callPackage ./musl { };
+    compiler-rt = callPackage ./compiler-rt { };
+    libcxx = callPackage ./libcxx { };
+    zlib = callPackage ./zlib { };
 
     # stage2 compiler -- build clang and lld using stage1 compiler, linking against stage2 runtime
     # llvm-stage2 = callPackage ./llvm-stage2 { };
