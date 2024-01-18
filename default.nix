@@ -31,24 +31,19 @@ let
     # stage1 toolchain
     llvm-toolchain-stage1 = callPackage ./llvm-toolchain-stage1 { };
 
-    # stage2 runtime -- build musl, compiler-rt, libc++ using stage1 compiler, static-linked against compiler-rt
+    # stage2 runtime -- build musl, compiler-rt, libc++ using llvm-toolchain-stage1, static-linked against compiler-rt
     musl = callPackage ./musl { };
     compiler-rt = callPackage ./compiler-rt { };
     libcxx = callPackage ./libcxx { };
     zlib = callPackage ./zlib { };
 
-    # stage2 compiler -- build clang and lld using stage1 compiler, linking against stage2 runtime
-    # llvm-stage2 = callPackage ./llvm-stage2 { };
-    # clang-stage2 = callPackage ./clang-stage2 { }; # patched to find standard headers and libraries automatically
-    # lld-stage2 = callPackage ./lld-stage2 { }; # patched to add RUNPATH automatically
+    # stage2 compiler -- build clang and lld using llvm-toolchain-stage1, linking against stage2 runtime
+    llvm = callPackage ./llvm { };
+    clang = callPackage ./clang { };
+    lld = callPackage ./lld { };
 
-    # # LFS libraries -- build musl, compiler-rt, libc++ using stage2 compiler, static-linked against compiler-rt
-    
-
-    # # LFS compiler -- build clang and lld using stage2 compiler, linking against LFS libraries
-    # llvm = callPackage ./llvm { };
-    # clang = callPackage ./clang { };
-    # lld = callPackage ./lld { };
+    # stage2 toolchain
+    llvm-toolchain = callPackage ./llvm-toolchain { };
 
     # # LFS system software
     # make = callPackage ./make { };

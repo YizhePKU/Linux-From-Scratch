@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$git/bin:$python3/bin:$cmake/bin:$make/bin:$busybox/bin"
+export PATH="$git/bin:$python3/bin:$cmake/bin:$make/bin:$toolchain/bin:$busybox/bin"
+export LDFLAGS="-L$libcxx/lib -L$musl/lib -Wl,--dynamic-linker=$musl/lib/ld-musl-x86_64.so.1"
 
 # unpack phase
 mkdir $TMPDIR/source && cd $TMPDIR/source

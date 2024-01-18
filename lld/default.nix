@@ -1,4 +1,4 @@
-{ busybox-bin, make-tmp, cmake-tmp, python3-tmp, git-tmp, llvm, clang, lld-stage2 }:
+{ busybox-bin, llvm-toolchain-stage1, make-tmp, cmake-tmp, python3-tmp, git-tmp, musl, libcxx, llvm }:
 
 derivation {
   name = "lld-17.0.6";
@@ -10,14 +10,13 @@ derivation {
   };
   __contentAddressed = true;
 
-  patches = [ ./auto-add-rpath.patch ./sort-input-files.patch ];
+  patches = [ ./auto-add-rpath.patch ];
 
   busybox = busybox-bin;
+  toolchain = llvm-toolchain-stage1;
   make = make-tmp;
   cmake = cmake-tmp;
   python3 = python3-tmp;
   git = git-tmp;
-  llvm = llvm;
-  clang = clang;
-  lld = lld-stage2;
+  inherit musl libcxx llvm;
 }
