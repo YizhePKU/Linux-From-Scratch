@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$make/bin:$busybox/bin"
+export PATH="$toolchain/bin:$make/bin:$busybox/bin"
 export CFLAGS="-I$zlib/include"
 export LDFLAGS="-L$zlib/lib -lz"
 

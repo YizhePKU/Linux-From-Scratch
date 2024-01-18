@@ -1,4 +1,4 @@
-{ busybox, zlib, make, llvm, clang, lld, curl }:
+{ llvm-toolchain, busybox, make, zlib, curl }:
 
 derivation {
   name = "git-2.43.0";
@@ -10,5 +10,6 @@ derivation {
   };
   __contentAddressed = true;
 
-  inherit busybox zlib make llvm clang lld curl;
+  toolchain = llvm-toolchain;
+  inherit busybox make zlib curl;
 }

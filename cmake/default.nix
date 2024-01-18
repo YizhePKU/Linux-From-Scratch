@@ -1,4 +1,4 @@
-{ busybox, make, llvm, clang, lld, openssl }:
+{ llvm-toolchain, busybox, make, openssl }:
 
 derivation {
   name = "cmake-3.28.1";
@@ -10,5 +10,6 @@ derivation {
   };
   __contentAddressed = true;
 
-  inherit busybox make llvm clang lld openssl;
+  toolchain = llvm-toolchain;
+  inherit busybox make openssl;
 }

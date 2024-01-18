@@ -45,19 +45,16 @@ let
     # stage2 toolchain
     llvm-toolchain = callPackage ./llvm-toolchain { };
 
-    # # LFS system software
-    # make = callPackage ./make { };
-    # busybox = callPackage ./busybox { };
-    # perl = callPackage ./perl { };
-    # openssl = callPackage ./openssl { };
-    # cmake = callPackage ./cmake { };
-    # curl = callPackage ./curl { };
-    # git = callPackage ./git { };
-    # ncurses = callPackage ./ncurses { };
-    # python3 = callPackage ./python3 { };
-
-    # zlib-test = callPackage ./zlib-test { };
-    # llvm-test = callPackage ./llvm-test { };
+    # LFS system software
+    make = callPackage ./make { };
+    busybox = callPackage ./busybox { };
+    perl = callPackage ./perl { };
+    openssl = callPackage ./openssl { };
+    cmake = callPackage ./cmake { };
+    curl = callPackage ./curl { };
+    git = callPackage ./git { };
+    python3 = callPackage ./python3 { };
+    ncurses = callPackage ./ncurses { };
   };
 in
 pkgs

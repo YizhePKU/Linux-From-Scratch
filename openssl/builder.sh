@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$perl/bin:$lld/bin:$clang/bin:$llvm/bin:$make/bin:$busybox/bin"
+export PATH="$perl/bin:$make/bin:$toolchain/bin:$busybox/bin"
 
 # unpack phase
 mkdir $TMPDIR/source && cd $TMPDIR/source

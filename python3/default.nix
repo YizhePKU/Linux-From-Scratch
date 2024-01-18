@@ -1,4 +1,4 @@
-{ busybox, make, llvm, clang, lld, zlib, openssl }:
+{ llvm-toolchain, busybox, make, zlib, openssl }:
 
 derivation {
   name = "python-3.12.1";
@@ -10,6 +10,7 @@ derivation {
   };
   __contentAddressed = true;
 
-  inherit busybox make llvm clang lld zlib openssl;
+  toolchain = llvm-toolchain;
+  inherit busybox make zlib openssl;
 }
 

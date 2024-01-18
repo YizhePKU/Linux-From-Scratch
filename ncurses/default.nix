@@ -1,4 +1,4 @@
-{ busybox, make, llvm, clang, lld }:
+{ llvm-toolchain, busybox, make }:
 
 derivation {
   name = "ncurses-6.4";
@@ -10,5 +10,6 @@ derivation {
   };
   __contentAddressed = true;
 
-  inherit busybox make llvm clang lld;
+  toolchain = llvm-toolchain;
+  inherit busybox make;
 }

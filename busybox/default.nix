@@ -1,4 +1,4 @@
-{ busybox-bin, git-tmp, make, llvm, clang, lld }:
+{ busybox-bin, llvm-toolchain, make, git-tmp }:
 
 derivation {
   name = "busybox-1.36.1";
@@ -15,6 +15,7 @@ derivation {
   merge = ./merge_config.sh;
 
   busybox = busybox-bin;
+  toolchain = llvm-toolchain;
+  make = make;
   git = git-tmp;
-  inherit make llvm clang lld;
 }

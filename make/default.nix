@@ -1,4 +1,4 @@
-{ busybox-bin, llvm, clang, lld }:
+{ busybox-bin, llvm-toolchain }:
 
 derivation {
   name = "gnumake-4.4.1";
@@ -11,5 +11,5 @@ derivation {
   __contentAddressed = true;
 
   busybox = busybox-bin;
-  inherit llvm clang lld;
+  toolchain = llvm-toolchain;
 }

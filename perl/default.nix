@@ -1,4 +1,4 @@
-{ busybox, make, llvm, clang, lld }:
+{ busybox, llvm-toolchain, make }:
 
 derivation {
   name = "perl-5.38.2";
@@ -10,6 +10,7 @@ derivation {
   };
   __contentAddressed = true;
 
-  inherit busybox make llvm clang lld;
+  toolchain = llvm-toolchain;
+  inherit busybox make;
 }
 

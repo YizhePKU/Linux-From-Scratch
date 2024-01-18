@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$curl/bin:$lld/bin:$clang/bin:$llvm/bin:$make/bin:$busybox/bin"
+export PATH="$curl/bin:$toolchain/bin:$make/bin:$busybox/bin"
 
 # unpack phase
 mkdir $TMPDIR/source && cd $TMPDIR/source

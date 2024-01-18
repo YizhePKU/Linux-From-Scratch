@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$make/bin:$git/bin:$busybox/bin"
+export PATH="$make/bin:$git/bin:$toolchain/bin:$busybox/bin"
 export KCONFIG_NOTIMESTAMP=1
 
 # unpack phase

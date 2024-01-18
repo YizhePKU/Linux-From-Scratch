@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu -o pipefail
 
-export PATH="$lld/bin:$clang/bin:$llvm/bin:$busybox/bin"
+export PATH="$toolchain/bin:$busybox/bin"
 export LD="ld.lld"
 
 # unpack phase

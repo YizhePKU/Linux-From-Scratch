@@ -1,4 +1,4 @@
-{ busybox, make, llvm, clang, lld, perl }:
+{ llvm-toolchain, busybox, make, perl }:
 
 derivation {
   name = "openssl-3.2.0";
@@ -10,5 +10,6 @@ derivation {
   };
   __contentAddressed = true;
 
-  inherit busybox make llvm clang lld perl;
+  toolchain = llvm-toolchain;
+  inherit busybox make perl;
 }
