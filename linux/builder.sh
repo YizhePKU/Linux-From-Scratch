@@ -9,7 +9,7 @@ tar xf $src --strip-components=1
 
 # build phase
 mkdir $TMPDIR/build
-make defconfig O=$TMPDIR/build LLVM=1
+cp $config $TMPDIR/build/.config
 make -j8 O=$TMPDIR/build LLVM=1 HOSTCFLAGS="-I$elfutils/include -I$openssl/include" HOSTLDFLAGS="-L$elfutils/lib -L$openssl/lib"
 
 cd $TMPDIR/build

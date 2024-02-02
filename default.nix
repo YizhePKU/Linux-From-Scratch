@@ -54,7 +54,22 @@ let
     curl = callPackage ./curl { };
     git = callPackage ./git { };
     python3 = callPackage ./python3 { };
+    m4 = callPackage ./m4 { };
+    flex = callPackage ./flex { };
+    bison = callPackage ./bison { };
+    libelf = callPackage ./libelf { };
     ncurses = callPackage ./ncurses { };
+    # util-linux = callPackage ./util-linux { };
+    # ip-route2
+
+    # elfutils requires a log of glibc compatibility packages
+    argp = callPackage ./argp { };
+    fts = callPackage ./fts { };
+    obstack = callPackage ./obstack { };
+    elfutils = callPackage ./elfutils { };
+
+    # Linux kernel
+    linux = callPackage ./linux { };
   };
 in
 pkgs

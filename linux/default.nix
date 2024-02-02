@@ -1,4 +1,4 @@
-{ llvm-toolchain, busybox, make, perl, openssl, flex, bison, elfutils }:
+{ llvm-toolchain, busybox, make, perl, openssl, flex, bison, ncurses, elfutils }:
 
 derivation {
   name = "linux-6.6.9";
@@ -10,6 +10,10 @@ derivation {
   };
   __contentAddressed = true;
 
+  # To edit config, run
+  # make menuconfig O=$TMPDIR/build LLVM=1 HOSTCC="clang -I$ncurses/include" HOSTLDFLAGS="-L$ncurses/lib"
+  config = ./.config;
+
   toolchain = llvm-toolchain;
-  inherit busybox make perl openssl flex bison elfutils;
+  inherit busybox make perl openssl flex bison ncurses elfutils;
 }

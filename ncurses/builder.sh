@@ -9,9 +9,9 @@ tar xf $src --strip-components=1
 
 # build phase
 mkdir $TMPDIR/build && cd $TMPDIR/build
-$TMPDIR/source/configure CC=clang --prefix=$out --with-shared --without-debug --enable-rpath --enable-widec 
+$TMPDIR/source/configure CC=clang --prefix=$out --with-shared --without-debug --enable-rpath
 make -j8
 make install
 
-# Some programs expect to find `curses.h` in `$ncurses/include` instead of `$ncurses/ncursesw/include`
-ln -s $out/include/ncursesw/curses.h $out/include/curses.h
+# Some programs expect to find `ncurses.h` in `$ncurses/include` instead of `$ncurses/ncurses/include`
+ln -s $out/include/ncurses/curses.h $out/include/ncurses.h
