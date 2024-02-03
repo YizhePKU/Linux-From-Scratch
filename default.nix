@@ -72,6 +72,7 @@ let
 
     # systemd
     libcap = callPackage ./libcap { };
+    gperf = callPackage ./gperf { };
     systemd = callPackage ./systemd { };
   };
 in
