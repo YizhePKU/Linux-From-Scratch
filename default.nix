@@ -57,8 +57,6 @@ let
     m4 = callPackage ./m4 { };
     flex = callPackage ./flex { };
     bison = callPackage ./bison { };
-    libelf = callPackage ./libelf { };
-    ncurses = callPackage ./ncurses { };
     # util-linux = callPackage ./util-linux { };
     # ip-route2
 
@@ -69,7 +67,12 @@ let
     elfutils = callPackage ./elfutils { };
 
     # Linux kernel
+    ncurses = callPackage ./ncurses { };
     linux = callPackage ./linux { };
+
+    # systemd
+    libcap = callPackage ./libcap { };
+    systemd = callPackage ./systemd { };
   };
 in
 pkgs
