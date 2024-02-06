@@ -57,8 +57,8 @@ let
     m4 = callPackage ./m4 { };
     flex = callPackage ./flex { };
     bison = callPackage ./bison { };
-    # util-linux = callPackage ./util-linux { };
-    # ip-route2
+    ninja = callPackage ./ninja { };
+    meson = callPackage ./meson { };
 
     # elfutils requires a log of glibc compatibility packages
     argp = callPackage ./argp { };
