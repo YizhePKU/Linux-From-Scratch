@@ -48,6 +48,7 @@ let
     # LFS system software
     make = callPackage ./make { };
     busybox = callPackage ./busybox { };
+    coreutils = callPackage ./coreutils { };
     perl = callPackage ./perl { };
     openssl = callPackage ./openssl { };
     cmake = callPackage ./cmake { };
@@ -60,21 +61,26 @@ let
     ninja = callPackage ./ninja { };
     meson = callPackage ./meson { };
 
-    # elfutils requires a log of glibc compatibility packages
+    # elfutils requires a ton of glibc compatibility packages
     argp = callPackage ./argp { };
     fts = callPackage ./fts { };
     obstack = callPackage ./obstack { };
     elfutils = callPackage ./elfutils { };
+
+    # more glibc compatibility packages: getconf, getent, iconv
+    musl-utils = callPackage ./musl-utils { };
 
     # Linux kernel
     ncurses = callPackage ./ncurses { };
     linux = callPackage ./linux { };
 
     # systemd
-    libcap = callPackage ./libcap { };
-    gperf = callPackage ./gperf { };
-    util-linux = callPackage ./util-linux { };
-    systemd = callPackage ./systemd { };
+    # libcap = callPackage ./libcap { };
+    # gperf = callPackage ./gperf { };
+    # util-linux = callPackage ./util-linux { };
+    # systemd = callPackage ./systemd { };
+
+    runit = callPackage ./runit { };
   };
 in
 pkgs
